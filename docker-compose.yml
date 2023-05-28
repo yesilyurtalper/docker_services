@@ -18,9 +18,9 @@ services:
       - keycloak_data:/opt/jboss/keycloak/standalone/data
 
   database:
-    image: mysql:5.7
+    image: mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=mysecretpassword
+      - MYSQL_ROOT_PASSWORD=pass
       - MYSQL_DATABASE=keycloak
     ports:
       - 3306:3306

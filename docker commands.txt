@@ -1,0 +1,2 @@
+executing a command inside a container:
+docker exec -it docker_services-database-1 mysql -u root  -p

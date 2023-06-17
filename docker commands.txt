@@ -1,2 +1,12 @@
-executing a command inside a container:
+help
+docker help
+docker build --help
+docker compose --help
+
+compose
+docker compose -f compose_mysql_keycloak.yml up -d
+docker compose -f compose_mysql_keycloak.yml down
+
+exec: executing a command in a running container:
 docker exec -it docker_services-database-1 mysql -u root  -p
+

@@ -4,7 +4,7 @@ volumes:
   pgdata:
 
 services:
-  dpostgres:
+  postgres:
     image: postgres
     container_name: postgres
     volumes:

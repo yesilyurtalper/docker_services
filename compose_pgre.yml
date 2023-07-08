@@ -1,0 +1,16 @@
+version: '3.8'
+
+volumes:
+  pgdata:
+
+services:
+  dpostgres:
+    image: postgres
+    container_name: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: root_db
+

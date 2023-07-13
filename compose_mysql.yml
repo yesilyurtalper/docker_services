@@ -1,15 +1,15 @@
 version: '3'
+name: mysql
 
 volumes:
-  mysql_data:
+  data:
 
 services:
   mysql:
-    container_name: mysql
     image: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=pass
     ports:
       - 3306:3306
     volumes:
-      - mysql_data:/var/lib/mysql
+      - data:/var/lib/mysql

@@ -1,18 +1,27 @@
-version: '3'
-name: keycloak
 
-volumes:
-  data:
+name: keycloak
 
 services:
   keycloak:
     image: jboss/keycloak
+    container_name: keycloak
     environment:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
+      - DB_VENDOR=POSTGRES
+      - DB_ADDR=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=keycloak
+      - DB_USER=root
+      - DB_PASSWORD=pass
     ports:
-      - 8081:8080
-    volumes:
-      - data:/opt/jboss/keycloak/standalone/data
+      - 8080:8080
+    networks:
+      - network1
+
+networks:
+  network1:
+    name: local_network
+    external: true
 
 

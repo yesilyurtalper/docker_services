@@ -1,16 +1,24 @@
-version: '3.8'
-name: pgre
+
+name: postgres
 
 volumes:
   data:
 
 services:
-  pgre:
+  postgres:
     image: postgres
+    container_name: postgres
     volumes:
       - data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: pass
-      POSTGRES_DB: root_db
+    networks:
+      - network1
+
+networks:
+  network1:
+    name: local_network
+    external: true
+
 

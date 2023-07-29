@@ -12,4 +12,9 @@ docker compose -f compose_keycloak.yml -p keycloak down
 
 exec: executing a command in a running container:
 docker exec -it docker_services-database-1 mysql -u root  -p
+docker exec -it postgres bash
+    psql root root
+    \l
+    CREATE DATABASE keycloak;
+
 

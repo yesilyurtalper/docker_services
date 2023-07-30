@@ -4,7 +4,16 @@ docker build --help
 docker compose --help
 
 build with path, tag and context
-docker build -t alperyesilyurt/ecommerce_itemapi:latest -f D:/repo/AspCore_Microservices_ECommerce/ECommerce.ItemService.API/Dockerfile D:/repo/AspCore_Microservices_ECommerce
+docker build 
+    -t alperyesilyurt/ecommerce_itemapi:latest 
+    -f D:/repo/AspCore_Microservices_ECommerce/ECommerce.ItemService.API/Dockerfile 
+    -f docker_services/ecommerce_itemapi_docker
+     D:/repo/AspCore_Microservices_ECommerce
+
+retag an image and push it
+docker push alperyesilyurt/ecommerce_itemapi:latest
+docker tag bmi:v1 tericcabrel/bmi-demo:v1
+docker push tericcabrel/bmi-demo:v1
 
 compose
 docker compose -f compose_mysql_keycloak.yml up -d

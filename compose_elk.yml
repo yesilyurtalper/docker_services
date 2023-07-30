@@ -1,4 +1,4 @@
-version: '3'
+
 name: elk
 
 volumes:
@@ -7,16 +7,27 @@ volumes:
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.15.1
+    container_name: elasticsearch
     ports:
       - 9200:9200
     environment:
       - discovery.type=single-node
     volumes:
       - data:/usr/share/elasticsearch/data
+    networks:
+      - network1
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.15.1
+    container_name: kibana
     ports:
       - 5601:5601
     depends_on:
       - elasticsearch
+    networks:
+      - network1
+
+networks:
+  network1:
+    name: local_network
+    external: true

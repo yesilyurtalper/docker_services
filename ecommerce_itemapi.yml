@@ -14,6 +14,8 @@ services:
        OIDC_AUTHORITY: http://keycloak:8080/auth/realms/local_realm
        ASPNETCORE_ENVIRONMENT: Development
        ASPNETCORE_URLS: https://+:443;http://+:80
+       ELK_URL: http://elasticsearch:9200/
+       LOG_LEVEL: info
     networks:
       - network1
     volumes:

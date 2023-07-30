@@ -4,11 +4,8 @@ name: ecommerce_itemapi
 
 services:
   ecommerce_itemapi:
-    image: ecommerce_itemapi
+    image: alperyesilyurt/ecommerce_itemapi:latest
     container_name: ecommerce_itemapi
-    build:
-      context: D:/repo/AspCore_Microservices_ECommerce
-      dockerfile: ECommerce.ItemService.API/Dockerfile
     ports:
       - 7207:443
       - 5207:80

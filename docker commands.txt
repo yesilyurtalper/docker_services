@@ -3,6 +3,9 @@ docker help
 docker build --help
 docker compose --help
 
+build with path, tag and context
+docker build -t alperyesilyurt/ecommerce_itemapi:latest -f D:/repo/AspCore_Microservices_ECommerce/ECommerce.ItemService.API/Dockerfile D:/repo/AspCore_Microservices_ECommerce
+
 compose
 docker compose -f compose_mysql_keycloak.yml up -d
 docker compose -f compose_mysql_keycloak.yml down

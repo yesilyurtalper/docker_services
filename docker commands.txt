@@ -1,32 +1,48 @@
-help
+HELP
 docker help
 docker build --help
 docker compose --help
 
-build with path, tag and context
+1.BUILD with path(dockerfile), tag and context
+context means the base resource path for dockerfile commands(e.g. copy) 
+If no context or . specified, url of dockerfile regarded as context.
 docker build 
     -t alperyesilyurt/ecommerce_itemapi:latest 
-    -f D:/repo/AspCore_Microservices_ECommerce/ECommerce.ItemService.API/Dockerfile 
     -f docker_services/ecommerce_itemapi_docker
      D:/repo/AspCore_Microservices_ECommerce
 
-retag an image and push it
+
+2.PUSH the image or RETAG before push
 docker push alperyesilyurt/ecommerce_itemapi:latest
 docker tag bmi:v1 tericcabrel/bmi-demo:v1
 docker push tericcabrel/bmi-demo:v1
 
-compose
+
+3.COMPOSE(or RUN) with -f
 docker compose -f compose_mysql_keycloak.yml up -d
 docker compose -f compose_mysql_keycloak.yml down
 With a specific project name different than parent folder
 docker compose -f compose_keycloak.yml -p keycloak up -d 
 docker compose -f compose_keycloak.yml -p keycloak down
+Project name could also be specified at the beginning of compose file, with -name tag
 
-exec: executing a command in a running container:
+
+4.EXEC: executing a command in a running container:
+Depends on the image. Refer to the readme of the image
 docker exec -it docker_services-database-1 mysql -u root  -p
 docker exec -it postgres bash
     psql root root
     \l
     CREATE DATABASE keycloak;
 
+
+5.create a new named volume and copy from an existing one
+docker volume create --name ecommerce_itemapi_data
+docker run --rm -it -v ecommerce_item_data:/from -v ecommerce_itemapi_data:/to alpine ash -c 'cd /from ; cp -av . /to'  
+
+
+6.NETWORK operations
+docker network ls
+docker network create ecommerce_network
+docker network inspect custom_local_network
 

@@ -7,7 +7,7 @@ services:
     image: alperyesilyurt/ecommerce_itemapi:latest
     container_name: ecommerce_itemapi
     depends_on:
-      - mysql
+      - ecommerce_itemapi_mysql
     ports:
       - 7207:443
       - 5207:80
@@ -27,7 +27,7 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
-  mysql:
+  ecommerce_itemapi_mysql:
     image: mysql
     container_name: ecommerce_itemapi_mysql
     environment:
@@ -41,7 +41,7 @@ services:
 
 networks:
   ecommerce_network:
-    external: true
+    name: ecommerce_network
   ecommerce_itemapi_network:
     name: ecommerce_itemapi_network
 

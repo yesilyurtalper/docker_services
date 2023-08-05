@@ -34,7 +34,7 @@ services:
 
 networks:
   ecommerce_network:
-    external: true
+    name: ecommerce_network
   elk_network:
     name: elk_network
 

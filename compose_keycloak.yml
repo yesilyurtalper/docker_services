@@ -6,7 +6,7 @@ services:
     image: jboss/keycloak
     container_name: keycloak
     depends_on: 
-      - postgres
+      - keycloak_postgres
     environment:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
@@ -20,20 +20,26 @@ services:
       - 8080:8080
     networks:
       - ecommerce_network
+      - keycloak_network
 
-  postgres:
+  keycloak_postgres:
     image: postgres
     container_name: keycloak_postgres
     volumes:
-      - data:/var/lib/postgresql/data
+      - keycloak_data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: pass
+    networks:
+      - keycloak_network
 
 networks:
   ecommerce_network:
-    external: true
+    name: ecommerce_network
+  keycloak_network:
+    name: keycloak_network
 
 volumes:
-  data:
+  keycloak_data:
+    name: keycloak_data
 

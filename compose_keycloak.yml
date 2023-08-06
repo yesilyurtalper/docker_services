@@ -30,6 +30,7 @@ services:
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: pass
+      POSTGRES_DB: keycloak
     networks:
       - keycloak_network
 

@@ -8,7 +8,7 @@ context means the base resource path for dockerfile commands(e.g. copy)
 If no context or . specified, url of dockerfile regarded as context.
 docker build 
     -t alperyesilyurt/ecommerce_itemapi:latest 
-    -f docker_services/ecommerce_itemapi_docker
+    -f docker_files/ecommerce_itemapi_docker
      D:/repo/AspCore_Microservices_ECommerce
 
 

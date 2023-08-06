@@ -1,9 +1,6 @@
 
 name: mysql
 
-volumes:
-  data:
-
 services:
   mysql:
     image: mysql
@@ -13,11 +10,15 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     networks:
-      - network1
+      - ecommerce_network
 
 networks:
-  network1:
-    name: local_network
+  ecommerce_network:
+    name: ecommerce_network
+
+volumes:
+  mysql_data:
+    name: mysql_data
 

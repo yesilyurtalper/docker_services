@@ -1,0 +1,28 @@
+
+name: ecommerce_itemapi
+
+services:
+  ecommerce_itemapi:
+    image: alperyesilyurt/ecommerce_itemapi:latest
+    container_name: ecommerce_itemapi
+    ports:
+      - 7207:443
+      - 5207:80
+    environment:
+      DB_CON_STR: server=mysql;port=3306;database=ECommerceItemService;user=root;password=pass;
+      OIDC_AUTHORITY: http://keycloak:8080/auth/realms/local_realm
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+      ELK_URL: http://elasticsearch:9200/
+      ELK_PASS: alper
+      ELK_USER: alper
+      LOG_LEVEL: info
+    networks:
+      - local_network
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+networks:
+  local_network:
+    name: local_network

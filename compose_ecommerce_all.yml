@@ -1,77 +1,68 @@
 
-name: ecommerce
+name: ecommerce_all
 
 services:
-  ecommerce_itemapi:
+  itemapi:
     image: alperyesilyurt/ecommerce_itemapi:latest
-    container_name: ecommerce_itemapi
+    container_name: ecommerce_all_itemapi
     depends_on:
-      - ecommerce_itemapi_mysql
+      - itemapi_mysql
     ports:
       - 7207:443
       - 5207:80
     environment:
-      DB_CON_STR: server=ecommerce_itemapi_mysql;port=3306;database=ECommerceItemService;user=root;password=pass;
-      OIDC_AUTHORITY: http://keycloak:8080/auth/realms/local_realm
+      DB_CON_STR: server=ecommerce_all_itemapi_mysql;port=3306;database=ECommerceItemService;user=root;password=pass;
+      OIDC_AUTHORITY: http://ecommerce_all_keycloak:8080/auth/realms/local_realm
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: https://+:443;http://+:80
       ELK_URL: http://elasticsearch:9200/
       ELK_PASS: alper
       ELK_USER: alper
       LOG_LEVEL: info
-    networks:
-      - ecommerce_network
-      - ecommerce_itemapi_network
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
-  ecommerce_itemapi_mysql:
+  itemapi_mysql:
     image: mysql
-    container_name: ecommerce_itemapi_mysql
+    container_name: ecommerce_all_itemapi_mysql
     environment:
       - MYSQL_ROOT_PASSWORD=pass
     ports:
       - 3306:3306
-    networks:
-      - ecommerce_itemapi_network
     volumes:
-      - ecommerce_itemapi_data:/var/lib/mysql
+      - itemapi_data:/var/lib/mysql
 
   keycloak:
-    image: jboss/keycloak
-    container_name: keycloak
+    image: keycloak/keycloak
+    container_name: ecommerce_all_keycloak
+    command: ["start-dev"]
     depends_on: 
       - keycloak_postgres
     environment:
-      - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=admin
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
       - DB_VENDOR=POSTGRES
-      - DB_ADDR=keycloak_postgres
+      - DB_ADDR=ecommerce_all_keycloak_postgres
       - DB_PORT=5432
       - DB_DATABASE=keycloak
       - DB_USER=root
       - DB_PASSWORD=pass
     ports:
       - 8080:8080
-    networks:
-      - ecommerce_network
-      - keycloak_network
 
   keycloak_postgres:
     image: postgres
-    container_name: keycloak_postgres
+    container_name: ecommerce_all_keycloak_postgres
     volumes:
       - keycloak_data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: pass
-    networks:
-      - keycloak_network
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
-    container_name: elasticsearch
+    container_name: ecommerce_all_elasticsearch
     ports:
       - 9200:9200
     environment:
@@ -82,13 +73,10 @@ services:
       - xpack.security.enrollment.enabled=false
     volumes:
       - elk_data:/usr/share/elasticsearch/data
-    networks:
-      - ecommerce_network
-      - elk_network
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.8.1
-    container_name: kibana
+    container_name: ecommerce_all_kibana
     environment:
       - ELASTICSEARCH_USERNAME=alper
       - ELASTICSEARCH_PASSWORD=alper
@@ -96,23 +84,8 @@ services:
       - 5601:5601
     depends_on:
       - elasticsearch
-    networks:
-      - elk_network
-
-networks:
-  ecommerce_network:
-    name: ecommerce_network
-  ecommerce_itemapi_network:
-    name: ecommerce_itemapi_network
-  keycloak_network:
-    name: keycloak_network
-  elk_network:
-    name: elk_network
 
 volumes:
-  ecommerce_itemapi_data:
-    name: ecommerce_itemapi_data
+  itemapi_data:
   keycloak_data:
-    name: keycloak_data
   elk_data:
-    name: elk_data

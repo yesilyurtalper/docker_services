@@ -1,24 +1,23 @@
 
 name: postgres
 
-volumes:
-  data:
-
 services:
   postgres:
     image: postgres
     container_name: postgres
     volumes:
-      - data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: pass
     networks:
-      - network1
+      - local_network
 
 networks:
-  network1:
-    name: local_network
+  local_network:
     external: true
+
+volumes:
+  postgres_data:
 
 

@@ -10,15 +10,14 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - mysql_data:/var/lib/mysql
+      - data:/var/lib/mysql
     networks:
-      - ecommerce_network
+      - local_network
 
 networks:
-  ecommerce_network:
-    name: ecommerce_network
+  local_network:
+    name: local_network
 
 volumes:
-  mysql_data:
-    name: mysql_data
+  data:
 
